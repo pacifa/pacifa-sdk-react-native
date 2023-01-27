@@ -1,0 +1,24 @@
+name: Publish NPM Package
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+jobs:
+  publish-package:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+        registry-url: 'https://gitlab.com/api/v4/projects/20225750/packages/npm/'
+        scope: '@pacifa-api'
+    - name: Prepare git to allow yarn to git commit when making version
+      run: git config user.email "git@git.com" && git config user.name "github actions"
+    - name: Set version
+      run: yarn version --new-version `echo ${{ github.event.release.tag_name }}` --git-tag-version=false
+    - run: yarn install
+    - run: yarn prepare
+    - run: yarn publish
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_GITLAB_TOKEN }}

@@ -17,6 +17,7 @@ jobs:
       run: yarn version --new-version `echo ${{ github.event.release.tag_name }}` --git-tag-version=false
     - run: yarn install
     - run: yarn prepare
-    - run: yarn publish
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_PACIFA_REGISTRY_TOKEN }}
+    - name: Publish
+      run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc && yarn publish
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_PACIFA_REGISTRY_TOKEN}}

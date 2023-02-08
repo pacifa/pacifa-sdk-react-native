@@ -11,13 +11,13 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '14.x'
+        registry-url: 'https://registry.npmjs.org'
     - name: Prepare git to allow yarn to git commit when making version
       run: git config user.email "git@git.com" && git config user.name "github actions"
     - name: Set version
       run: yarn version --new-version `echo ${{ github.event.release.tag_name }}` --git-tag-version=false
     - run: yarn install
     - run: yarn prepare
-    - name: Publish
-      run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc && yarn publish
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_PACIFA_REGISTRY_TOKEN}}
+    - run: yarn publish
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_PACIFA_REGISTRY_TOKEN }}

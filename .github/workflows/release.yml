@@ -12,6 +12,7 @@ jobs:
       with:
         node-version: '14.x'
         registry-url: 'https://registry.npmjs.org'
+        always-auth: true
     - name: Prepare git to allow yarn to git commit when making version
       run: git config user.email "git@git.com" && git config user.name "github actions"
     - name: Set version

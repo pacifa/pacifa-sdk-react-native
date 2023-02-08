@@ -1,5 +1,5 @@
 {
-    "name": "@pacifa-api/react-native-components",
+    "name": "@pacifa-registry/react-native-components",
     "version": "1.2.1",
     "description": "React Native Components library to easily display views for the pacifa api datas",
     "license": "SEE LICENSE IN LICENSE",
